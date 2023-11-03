@@ -14,15 +14,10 @@
       <p>If you joke wrong way, your teeth have to pay. (Serious)</p>
     </div>
 
-    <div class="d-flex justify-content-center" >
+    <div class="d-flex justify-content-center bg-warning" >
       <div class="justify-content-center w-75 p-5">
-        <p><%= joke %></p>
+        <p><%= errorMessage %></p>
         <hr class="divider">
-
-        <form method="POST" action="/jokes/<%= id %>/vote" class="text-center">
-          <button type="submit" name="voteType" value="likes" class="btn btn-primary">This is Funny!</button>
-          <button type="submit" name="voteType" value="dislikes" class="btn btn-success">This is not Funny.</button>
-        </form>
         
       </div>
     </div>

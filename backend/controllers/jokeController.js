@@ -18,29 +18,34 @@ controller.getJoke = async (req, res) => {
     const joke = await Joke.findOne({ _id: { $nin: votedJokes } });
 
     if (!joke) {
-      res.status(404).json({ message: "No more jokes available" }); // TODO: handle error
+      res.status(404).render("error", {
+        errorMessage: "That's all the jokes for today! Come back another day!",
+      });
     } else {
       const jokeId = joke._id;
       res.render("joke", { joke: joke.content, id: jokeId });
     }
   } catch (error) {
     console.error("Error retrieving random joke:", error);
-    res.status(500).json({ error: "Failed to retrieve random joke" });
+    res.status(500).render("error", { errorMessage: "Internal server error!" });
   }
 };
 
 controller.voteJoke = async (req, res) => {
   try {
-    const jokeId = req.params.id;
+    let jokeId = req.params.id;
     const voteType = req.body.voteType;
+
+    if (voteType != "likes" && voteType != "dislikes")
+      throw new Error("Failed to vote for joke");
 
     // Check if the user has already voted for this joke
     const hasVoted = req.cookies[`${jokeId}`];
 
     if (hasVoted) {
-      res
-        .status(400)
-        .json({ message: "You have already voted for this joke." });
+      res.status(400).render("error", {
+        errorMessage: "You have already voted for this joke.",
+      });
     } else {
       // Update the vote count for the joke
       const update = { $inc: { [voteType]: 1 } };
@@ -54,11 +59,13 @@ controller.voteJoke = async (req, res) => {
         httpOnly: true,
       });
 
-      res.json(updatedJoke);
+      return res.redirect("/");
     }
   } catch (error) {
     console.error("Error voting for joke:", error);
-    res.status(500).json({ error: "Failed to vote for joke" });
+    res
+      .status(500)
+      .render("error", { errorMessage: "Failed to vote for joke" });
   }
 };
 
