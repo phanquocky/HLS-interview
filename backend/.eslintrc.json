@@ -9,7 +9,9 @@
         "ecmaVersion": "latest"
     },
     "rules": {
-        "quotes": ["error", "double"],
-        "semi": ["error", "always"]
+        "quotes": ["error", "double", { "allowTemplateLiterals": true }],
+        "semi": ["error", "always"],
+        "space-before-function-paren": ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}],
+        "comma-dangle": ["error", "never"],
     }
 }

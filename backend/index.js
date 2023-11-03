@@ -1,15 +1,22 @@
 "use strict";
 
+require("./database");
 const express = require("express");
 const app = express();
+const cookieParser = require("cookie-parser");
+require("dotenv").config();
+const connectToDatabase = require("./database");
 
 // Configure middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 // Define routes
 const indexRoute = require("./routes/index");
-const usersRoute = require("./routes/users");
+
+// routes
+app.use("/", indexRoute);
 
 // check not found error
 app.use((req, res, next) => {
@@ -22,11 +29,8 @@ app.use((error, req, res, next) => {
   res.status(500).render("error", { message: "Internal error" });
 });
 
-app.use("/", indexRoute);
-app.use("/users", usersRoute);
-
 // Start the server
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 app.listen(port, () => {
-  console.log(`Server is listening on port: ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
