@@ -2,7 +2,7 @@
 
 const express = require("express");
 const router = express.Router();
-const controller = require("../controllers/indexController");
+const controller = require("../controllers/jokeController");
 
 router.get("/", controller.getJoke);
 router.post("/jokes/:id/vote", controller.voteJoke);

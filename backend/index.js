@@ -5,7 +5,9 @@ const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
-const connectToDatabase = require("./database");
+
+// Set EJS as the view engine
+app.set("view engine", "ejs");
 
 // Configure middleware
 app.use(express.json());
@@ -13,7 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Define routes
-const indexRoute = require("./routes/index");
+const indexRoute = require("./routes/jokeRoute");
 
 // routes
 app.use("/", indexRoute);

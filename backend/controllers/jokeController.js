@@ -21,14 +21,7 @@ controller.getJoke = async (req, res) => {
       res.status(404).json({ message: "No more jokes available" }); // TODO: handle error
     } else {
       const jokeId = joke._id;
-
-      // Set a cookie to track the user's vote for this joke
-      res.cookie(`${jokeId}`, "voted", {
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 day
-        httpOnly: true,
-      });
-
-      res.json({ id: jokeId, joke: joke });
+      res.render("joke", { joke: joke.content, id: jokeId });
     }
   } catch (error) {
     console.error("Error retrieving random joke:", error);
@@ -42,7 +35,7 @@ controller.voteJoke = async (req, res) => {
     const voteType = req.body.voteType;
 
     // Check if the user has already voted for this joke
-    const hasVoted = req.cookies[`joke_${jokeId}`];
+    const hasVoted = req.cookies[`${jokeId}`];
 
     if (hasVoted) {
       res
@@ -56,7 +49,7 @@ controller.voteJoke = async (req, res) => {
       });
 
       // Set a cookie to track the user's vote for this joke
-      res.cookie(`joke_${jokeId}`, "voted", {
+      res.cookie(`${jokeId}`, "voted", {
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 day
         httpOnly: true,
       });
