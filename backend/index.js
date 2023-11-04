@@ -4,9 +4,11 @@ require("./database");
 const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
+const path = require("path");
 require("dotenv").config();
 
 // Set EJS as the view engine
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 // Configure middleware
@@ -22,7 +24,8 @@ app.use("/", indexRoute);
 
 // check not found error
 app.use((req, res, next) => {
-  res.status(404).render("error: ", { message: "File not foud!" });
+  console.log("hello oke ");
+  res.status(404).render("error", { message: "File not foud!" });
 });
 
 // check the internal error
@@ -36,3 +39,5 @@ const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+module.exports = app;

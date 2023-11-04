@@ -19,7 +19,7 @@ controller.getJoke = async (req, res) => {
 
     if (!joke) {
       res.status(404).render("error", {
-        errorMessage: "That's all the jokes for today! Come back another day!",
+        message: "That's all the jokes for today! Come back another day!",
       });
     } else {
       const jokeId = joke._id;
@@ -27,7 +27,7 @@ controller.getJoke = async (req, res) => {
     }
   } catch (error) {
     console.error("Error retrieving random joke:", error);
-    res.status(500).render("error", { errorMessage: "Internal server error!" });
+    res.status(500).render("error", { message: "Internal server error!" });
   }
 };
 
@@ -44,7 +44,7 @@ controller.voteJoke = async (req, res) => {
 
     if (hasVoted) {
       res.status(400).render("error", {
-        errorMessage: "You have already voted for this joke.",
+        message: "You have already voted for this joke.",
       });
     } else {
       // Update the vote count for the joke
@@ -63,9 +63,7 @@ controller.voteJoke = async (req, res) => {
     }
   } catch (error) {
     console.error("Error voting for joke:", error);
-    res
-      .status(500)
-      .render("error", { errorMessage: "Failed to vote for joke" });
+    res.status(500).render("error", { message: "Failed to vote for joke" });
   }
 };
 
