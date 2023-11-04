@@ -69,7 +69,7 @@ controller.voteJoke = async (req, res) => {
   }
 };
 
-// this controller use only once
+// this controller use only once for migrate data to database
 controller.postjoke = async (req, res) => {
   try {
     const insertedJokes = await Joke.insertMany(data);
