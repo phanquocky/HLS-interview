@@ -12,3 +12,7 @@ $ npm start
 ```
 
 node version v20.5.0
+
+# Deploy on Render.com
+
+https://hls-interview.onrender.com
