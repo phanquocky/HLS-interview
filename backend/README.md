@@ -10,3 +10,5 @@ $ npm run coverage
 # to start server
 $ npm start
 ```
+
+node version v20.5.0
